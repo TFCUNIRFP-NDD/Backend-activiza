@@ -1,4 +1,4 @@
-FROM python:3.9-alpine
+FROM python:3.13-alpine
 
 ENV PATH="/scripts:${PATH}"
 
@@ -8,9 +8,9 @@ apk add --update --no-cache --virtual .tmp gcc libc-dev linux-headers gcc musl-d
 RUN pip install -r /requirements.txt
 RUN apk del .tmp
 
-RUN mkdir /dashpack
-COPY ./dashpack /dashpack
-WORKDIR /dashpack
+RUN mkdir /backend
+COPY ./backend /backend
+WORKDIR /backend
 COPY ./scripts /scripts
 
 RUN chmod +x /scripts/*
