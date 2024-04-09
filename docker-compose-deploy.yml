@@ -18,7 +18,7 @@ services:
         env_file:
             - web.env
         environment:
-            - ALLOWED_HOSTS=127.0.0.1,localhost
+            - ALLOWED_HOSTS=127.0.0.1,localhost,34.125.175.117,10.182.0.2
         depends_on:
             - db
     proxy:
