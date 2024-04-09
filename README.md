@@ -1,4 +1,4 @@
-# backendactiviza - A dashboard for ticketing systems WORK IN PROGRESS
+# backend - A dashboard for ticketing systems WORK IN PROGRESS
 
 A dashboard made to easily provide stadistics to technical ticketing systems. See the most important data beautifuly and fast. Production and development ready with Docker.
 
@@ -30,11 +30,11 @@ Change the secret key in the `.yml` file.
 
 Once the server is up and running, we need to create the database, Django makes it easy. Run the migrations:
 
-`sudo docker-compose exec backendactiviza python manage.py migrate`
+`sudo docker-compose exec backend python manage.py migrate`
 
 Now create a superuser:
 
-`sudo docker-compose exec backendactiviza python manage.py createsuperuser`
+`sudo docker-compose exec backend python manage.py createsuperuser`
 
 ## FAQ
 
