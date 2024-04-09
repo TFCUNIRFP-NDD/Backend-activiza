@@ -10,7 +10,7 @@ services:
         volumes:
             - postgres_data:/var/lib/postgresql/data/
 
-    backendActiviza:
+    backendactiviza:
         build:
             context: .
         volumes:
@@ -29,7 +29,7 @@ services:
         ports:
             - "8080:8080"
         depends_on:
-            - backendActiviza
+            - backendactiviza
 
 volumes:
     static_data:
