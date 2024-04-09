@@ -12,32 +12,43 @@ from activiza.models import Ejercicio, Rutina
 from activiza.api.serializers import EjercicioSerializer, RutinaSerializer
 
 def carga_inicial(request):
-    #Gestor
-    user = User.objects.create_user("admin", "admin@admin.com", "admin")
-    user.is_staff=True
-    user.is_superuser=True
-    user.save()
+    try:
+        #Gestor
+        user = User.objects.create_user("admin", "admin@admin.com", "admin")
+        user.is_staff=True
+        user.is_superuser=True
+        user.save()
+        
+        #Entrenador
+        user = User.objects.create_user("entrenador", "entrenador@entrenador.com", "entrenador")
+        user.is_staff=True
+        user.save()
+        
+        #Cliente
+        user = User.objects.create_user("cliente", "cliente@cliente.com", "cliente")
+        user.peso = 95.5
+        user.altura = 180
+        user.save()
+    except Exception:
+        print("Usuarios ya existentes.")
+        
+    entrenador = User.objects.get(username="entrenador")
     
-    #Entrenador
-    user = User.objects.create_user("entrenador", "entrenador@entrenador.com", "entrenador")
-    user.is_staff=True
-    user.save()
+    #Rutinas
+    for x in range(0,5):
+        rutina = Rutina.objects.create(nombre = f"NombreRutina{x}", tipo = f"TipoRutina{x}", descripcion = f"Descripcion{x}", entrenador = entrenador)    
     
-    #Cliente
-    user = User.objects.create_user("cliente", "cliente@cliente.com", "cliente")
-    user.peso = 95.5
-    user.altura = 180
-    user.save()
-    
+        #Ejercicios
+        for y in range(0,10):
+            ejercicio = Ejercicio.objects.create(nombre = f"NombreEjercicio{x}{y}", descripcion = f"DescripcionEjercicio{x}{y}", repeticiones = 2, descanso = 1)
+            
+            rutina.ejercicios.add(ejercicio)
+
     return HttpResponse("Carga de datos inicial completada.")
 
-@login_required
 @api_view(['GET', 'POST'])
 def rutinas(request):
     if request.method == 'GET':
         rutina = Rutina.objects.all()
-        
-
-        
         rutina_serializer = RutinaSerializer(rutina, many=True)
         return JsonResponse(rutina_serializer.data, safe=False)
