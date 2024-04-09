@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 services:
     db:
@@ -9,8 +9,8 @@ services:
             - "5432:5432"
         volumes:
             - postgres_data:/var/lib/postgresql/data/
-  
-    dashpack:
+
+    backendActiviza:
         build:
             context: .
         volumes:
@@ -29,7 +29,7 @@ services:
         ports:
             - "8080:8080"
         depends_on:
-            - dashpack
+            - backendActiviza
 
 volumes:
     static_data:
