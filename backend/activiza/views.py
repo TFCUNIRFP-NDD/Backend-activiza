@@ -8,7 +8,7 @@ from rest_framework import status
 from django.contrib.auth.decorators import login_required
 
 #App
-from activiza.models import Ejercicio, Rutina
+from activiza.models import Ejercicio, Rutina, Publicacion, Cliente
 from activiza.api.serializers import EjercicioSerializer, RutinaSerializer
 
 def carga_inicial(request):
@@ -26,9 +26,8 @@ def carga_inicial(request):
         
         #Cliente
         user = User.objects.create_user("cliente", "cliente@cliente.com", "cliente")
-        user.peso = 95.5
-        user.altura = 180
-        user.save()
+        Cliente.objects.create(user = user, peso = 95.5, altura = 180, objetivo = "perder_peso")
+        
     except Exception:
         print("Usuarios ya existentes.")
         
@@ -52,3 +51,10 @@ def rutinas(request):
         rutina = Rutina.objects.all()
         rutina_serializer = RutinaSerializer(rutina, many=True)
         return JsonResponse(rutina_serializer.data, safe=False)
+    
+def test(request):
+    cliente = Cliente.objects.get(user=User.objects.get(username="cliente"))
+    print(cliente.peso)
+    print(cliente.altura)
+    print(cliente.objetivo)
+    return HttpResponse("Test hecho.")

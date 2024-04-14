@@ -12,6 +12,7 @@ router.register(r'rutina', viewSets.RutinaViewSet)
 
 urlpatterns = [
     path("carga_inicial/", views.carga_inicial, name="carga_inicial"),
+    path("test/", views.test, name="test"),
     path("api/rutinas", views.rutinas, name="rutinas"),
     path('api/', include(router.urls)),
     path('api-token-auth/', auth.obtain_auth_token),

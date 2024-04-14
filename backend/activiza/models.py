@@ -12,19 +12,30 @@ class Ejercicio(models.Model):
     def __str__(self):
         return str(self.nombre)
     
+class Entrenador(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    
 class Rutina(models.Model):
     nombre = models.CharField(max_length=100)
     tipo = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=1000)
     ejercicios = models.ManyToManyField(Ejercicio)
-    entrenador = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    entrenador = models.ForeignKey(Entrenador, on_delete=models.CASCADE, blank=True, null=True)
     
     def __str__(self):
         return str(self.nombre)    
 
-class Usuario(models.Model):
+class Cliente(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     altura = models.FloatField(max_length=5)
     peso = models.FloatField(max_length=5)
+    objetivo = models.CharField(max_length=1000)
+    entrenador = models.ForeignKey(Entrenador, on_delete=models.CASCADE, blank=True, null=True)
+    
     def __str__(self):
-        return str(self.user.name)
+        return str(self.user)    
+    
+class Publicacion(models.Model):
+    titulo = models.CharField(max_length=100)
+    mensaje = models.CharField(max_length=1000)
+    autor = models.ForeignKey(User, on_delete=models.CASCADE)
