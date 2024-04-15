@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.models import User
@@ -8,7 +9,7 @@ from rest_framework import status
 from django.contrib.auth.decorators import login_required
 
 #App
-from activiza.models import Ejercicio, Rutina, Publicacion, Cliente
+from activiza.models import Ejercicio, Rutina, Publicacion, Cliente, Entrenador
 from activiza.api.serializers import EjercicioSerializer, RutinaSerializer
 
 def carga_inicial(request):
@@ -23,6 +24,7 @@ def carga_inicial(request):
         user = User.objects.create_user("entrenador", "entrenador@entrenador.com", "entrenador")
         user.is_staff=True
         user.save()
+        Entrenador.objects.create(user=user)
         
         #Cliente
         user = User.objects.create_user("cliente", "cliente@cliente.com", "cliente")
@@ -31,7 +33,7 @@ def carga_inicial(request):
     except Exception:
         print("Usuarios ya existentes.")
         
-    entrenador = User.objects.get(username="entrenador")
+    entrenador = Entrenador.objects.get(user=User.objects.get(username="entrenador"))
     
     #Rutinas
     for x in range(0,5):
@@ -44,17 +46,40 @@ def carga_inicial(request):
             rutina.ejercicios.add(ejercicio)
 
     return HttpResponse("Carga de datos inicial completada.")
-
-@api_view(['GET', 'POST'])
-def rutinas(request):
-    if request.method == 'GET':
-        rutina = Rutina.objects.all()
-        rutina_serializer = RutinaSerializer(rutina, many=True)
-        return JsonResponse(rutina_serializer.data, safe=False)
-    
+   
 def test(request):
     cliente = Cliente.objects.get(user=User.objects.get(username="cliente"))
     print(cliente.peso)
     print(cliente.altura)
     print(cliente.objetivo)
     return HttpResponse("Test hecho.")
+
+@api_view(['GET', 'POST'])
+def rutina(request):
+    
+    if request.method == 'GET':
+        #TODO indenfiticar clientes
+        rutina = Rutina.objects.all()
+        rutina_serializer = RutinaSerializer(rutina, many=True)
+        return JsonResponse(rutina_serializer.data, safe=False)
+    
+    elif request.method == 'POST':
+        #Identificamos al entrenador logueado 
+        try:
+            logged_user = User.objects.get(username=request.user.username)
+            entrenador = Entrenador.objects.get(user=logged_user)
+        except Exception:
+            return HttpResponse("No tienes permisos para crear rutinas.")
+        
+        body = json.loads(request.body)
+        
+        #Se crea la rutina y se devuelve
+        rutina = Rutina.objects.create(nombre = body["nombre"], tipo = body["tipo"], descripcion = body["descripcion"], entrenador = entrenador)
+        rutina_serializer = RutinaSerializer(rutina)
+        
+        #Asociamos todos los ejercicios de la rutina
+        for ejercicio in body["ejercicios"]:
+            print(ejercicio)
+            rutina.ejercicios.add(Ejercicio.objects.get(id = ejercicio))
+        
+        return JsonResponse(rutina_serializer.data, safe=False)
