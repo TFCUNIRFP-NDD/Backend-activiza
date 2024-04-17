@@ -2,6 +2,7 @@
 
 set -e
 
+#Auto migrate para aplicar cambios en la BDD
 python manage.py migrate
 python manage.py collectstatic --no-input
 
