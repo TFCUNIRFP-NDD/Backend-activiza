@@ -8,7 +8,6 @@ services:
             - "80:80"
         volumes:
             - ./backend:/backend
-        command: sh -c "python manage.py runserver 0.0.0.0:80"
         environment:
             - DEBUG=1
             - ALLOWED_HOSTS=127.0.0.1,localhost,34.125.175.117,10.182.0.2
