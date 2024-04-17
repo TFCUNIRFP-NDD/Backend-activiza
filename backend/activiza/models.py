@@ -21,6 +21,7 @@ class Rutina(models.Model):
     descripcion = models.CharField(max_length=1000)
     ejercicios = models.ManyToManyField(Ejercicio)
     entrenador = models.ForeignKey(Entrenador, on_delete=models.CASCADE, blank=True, null=True)
+    media = models.CharField(max_length=1000, blank=True)
     
     def __str__(self):
         return str(self.nombre)    
