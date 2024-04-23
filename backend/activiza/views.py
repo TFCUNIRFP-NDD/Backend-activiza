@@ -37,11 +37,11 @@ def carga_inicial(request):
     
     #Rutinas
     for x in range(0,5):
-        rutina = Rutina.objects.create(nombre = f"NombreRutina{x}", tipo = f"TipoRutina{x}", descripcion = f"Descripcion{x}", entrenador = entrenador)    
+        rutina = Rutina.objects.create(nombre = f"NombreRutina{x}", tipo = f"TipoRutina{x}", descripcion = f"Descripcion{x}", entrenador = entrenador, media= "https://i.imgur.com/Z7EHhdu.jpeg")    
     
         #Ejercicios
         for y in range(0,10):
-            ejercicio = Ejercicio.objects.create(nombre = f"NombreEjercicio{x}{y}", descripcion = f"DescripcionEjercicio{x}{y}", repeticiones = 2, descanso = 1)
+            ejercicio = Ejercicio.objects.create(nombre = f"NombreEjercicio{x}{y}", descripcion = f"DescripcionEjercicio{x}{y}", repeticiones = 2, descanso = 1, media= "https://i.imgur.com/Z7EHhdu.jpeg")
             
             rutina.ejercicios.add(ejercicio)
 
