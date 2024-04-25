@@ -66,8 +66,7 @@ def rutina(request):
     elif request.method == 'POST':
         #Identificamos al entrenador logueado 
         try:
-            logged_user = User.objects.get(username=request.user.username)
-            entrenador = Entrenador.objects.get(user=logged_user)
+            entrenador = Entrenador.objects.get(user=request.user)
         except Exception:
             return HttpResponse("No tienes permisos para crear rutinas.")
         

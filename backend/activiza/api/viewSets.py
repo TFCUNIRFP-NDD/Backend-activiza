@@ -32,18 +32,15 @@ class PublicacionViewSet(viewsets.ModelViewSet):
     
     def create(self, request):
         serializer = PublicacionSerializer(data=request.data)
-        
-        print(request.data)
-        
+                
         if serializer.is_valid():
             #Identificamos al entrenador logueado 
             try:
-                logged_user = User.objects.get(username="paco")
-                Entrenador.objects.get(user=logged_user)
+                Entrenador.objects.get(user=request.user)
             except Exception:
                 return HttpResponse("No tienes permisos para crear rutinas.")
             
-             #Se crea la rutina y se devuelve
+            #Se crea la rutina y se devuelve
             publicacion = Publicacion.objects.create(titulo = request.data["titulo"], mensaje = request.data["mensaje"], autor = logged_user)
             publicacion_serializer = PublicacionSerializer(publicacion)
             
