@@ -15,6 +15,9 @@ class Ejercicio(models.Model):
 class Entrenador(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     
+    class Meta:
+         verbose_name = "Entrenadore"
+    
 class Rutina(models.Model):
     nombre = models.CharField(max_length=100)
     tipo = models.CharField(max_length=100)
@@ -39,4 +42,7 @@ class Cliente(models.Model):
 class Publicacion(models.Model):
     titulo = models.CharField(max_length=100)
     mensaje = models.CharField(max_length=1000)
-    autor = models.ForeignKey(User, on_delete=models.CASCADE)
+    autor = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
+    
+    class Meta:
+         verbose_name = "Publicacione"

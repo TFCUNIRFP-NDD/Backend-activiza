@@ -9,6 +9,7 @@ from activiza.api import viewSets
 router = routers.DefaultRouter()
 router.register(r'ejercicio', viewSets.EjercicioViewSet)
 router.register(r'user', viewSets.UserViewSet)
+router.register(r'publicaciones', viewSets.PublicacionViewSet)
 
 urlpatterns = [
     path("carga_inicial/", views.carga_inicial, name="carga_inicial"),

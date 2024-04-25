@@ -99,6 +99,7 @@ def rutina_detalle(request, pk):
     elif request.method == 'PUT': 
         rutina_data = JSONParser().parse(request) 
         rutina_serializer = RutinaSerializer(rutina, data=rutina_data) 
+        
         if rutina_serializer.is_valid(): 
             rutina_serializer.save() 
             return JsonResponse(rutina_serializer.data) 
