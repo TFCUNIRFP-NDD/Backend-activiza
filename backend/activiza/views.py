@@ -83,3 +83,27 @@ def rutina(request):
             rutina.ejercicios.add(Ejercicio.objects.get(id = ejercicio))
         
         return JsonResponse(rutina_serializer.data, safe=False)
+    
+@api_view(['GET', 'PUT', 'DELETE'])
+def rutina_detalle(request, pk):
+    
+    try: 
+        rutina = Rutina.objects.get(pk=pk) 
+    except Rutina.DoesNotExist: 
+        return JsonResponse({'message': 'The tutorial does not exist'}, status=status.HTTP_404_NOT_FOUND) 
+
+    if request.method == 'GET': 
+        rutina_serializer = RutinaSerializer(rutina) 
+        return JsonResponse(rutina_serializer.data) 
+
+    elif request.method == 'PUT': 
+        rutina_data = JSONParser().parse(request) 
+        rutina_serializer = RutinaSerializer(rutina, data=rutina_data) 
+        if rutina_serializer.is_valid(): 
+            rutina_serializer.save() 
+            return JsonResponse(rutina_serializer.data) 
+        return JsonResponse(rutina_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+
+    elif request.method == 'DELETE': 
+        rutina.delete() 
+        return JsonResponse({'message': f'Rutina {pk} eliminada.'}, status=status.HTTP_200_OK)
