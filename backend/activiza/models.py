@@ -37,6 +37,8 @@ class Cliente(models.Model):
     altura = models.FloatField(max_length=5)
     peso = models.FloatField(max_length=5)
     objetivo = models.CharField(max_length=1000)
+    genero = models.CharField(max_length=50)
+    lugar_entrenamiento = models.CharField(max_length=50)
     entrenador = models.ForeignKey(Entrenador, on_delete=models.CASCADE, blank=True, null=True)
     
     def __str__(self):
