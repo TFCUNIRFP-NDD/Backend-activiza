@@ -1,7 +1,7 @@
 from django.urls import include, path
 from rest_framework import routers
 from rest_framework.authtoken import views as auth
-
+from activiza.customAuthToken import CustomAuthToken
 from . import views
 from activiza.api import viewSets
 
@@ -18,5 +18,5 @@ urlpatterns = [
     path("api/rutina/", views.rutina, name="rutina"),
     path('api/rutina/<int:pk>', views.rutina_detalle, name="rutina_detalle"),
     path('api/', include(router.urls)),
-    path('api-token-auth/', auth.obtain_auth_token),
+    path('api-token-auth/', CustomAuthToken.as_view()),
 ]

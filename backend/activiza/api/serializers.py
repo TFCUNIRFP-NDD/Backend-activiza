@@ -18,7 +18,7 @@ class RutinaSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Rutina
-        fields = ('id', 'nombre', 'entrenador', 'tipo', 'descripcion', 'ejercicios', 'media')
+        fields = ('id', 'nombre', 'entrenador', 'descripcion', 'ejercicios', 'media')
         depth = 1
         
 class UserSerializer(serializers.ModelSerializer):

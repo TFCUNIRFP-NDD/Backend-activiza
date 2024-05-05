@@ -37,7 +37,7 @@ def carga_inicial(request):
     
     #Rutinas
     for x in range(0,5):
-        rutina = Rutina.objects.create(nombre = f"NombreRutina{x}", tipo = f"TipoRutina{x}", descripcion = f"Descripcion{x}", entrenador = entrenador, media= "https://i.imgur.com/Z7EHhdu.jpeg")    
+        rutina = Rutina.objects.create(nombre = f"NombreRutina{x}", descripcion = f"Descripcion{x}", entrenador = entrenador, media= "https://i.imgur.com/Z7EHhdu.jpeg", genero = "MUJER", objetivo = "PERDER_GRASA", lugar = "CASA")    
     
         #Ejercicios
         for y in range(0,10):
@@ -58,9 +58,11 @@ def test(request):
 def rutina(request):
     
     if request.method == 'GET':
-        #TODO indenfiticar clientes
-        rutina = Rutina.objects.all()
+        #Obtenemos las rutinas del entrenador asignado al cliente
+        cliente = Cliente.objects.get(user = request.user)
+        rutina = Rutina.objects.get(entrenador = cliente.entrenador)
         rutina_serializer = RutinaSerializer(rutina, many=True)
+        
         return JsonResponse(rutina_serializer.data, safe=False)
     
     elif request.method == 'POST':
@@ -89,7 +91,7 @@ def rutina_detalle(request, pk):
     try: 
         rutina = Rutina.objects.get(pk=pk) 
     except Rutina.DoesNotExist: 
-        return JsonResponse({'message': 'The tutorial does not exist'}, status=status.HTTP_404_NOT_FOUND) 
+        return JsonResponse({'message': 'No existe la rutina.'}, status=status.HTTP_404_NOT_FOUND) 
 
     if request.method == 'GET': 
         rutina_serializer = RutinaSerializer(rutina) 
