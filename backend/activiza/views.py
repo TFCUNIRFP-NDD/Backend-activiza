@@ -58,11 +58,16 @@ def test(request):
 def rutina(request):
     
     if request.method == 'GET':
-        #Obtenemos las rutinas del entrenador asignado al cliente
-        cliente = Cliente.objects.get(user = request.user)
-        rutina_serializer = RutinaSerializer(Rutina.objects.get(entrenador = cliente.entrenador), many=True)
-        
-        return JsonResponse(rutina_serializer.data, safe=False)
+        try:
+            #Obtenemos las rutinas del entrenador asignado al cliente
+            cliente = Cliente.objects.get(user = request.user)
+            rutina_serializer = RutinaSerializer(Rutina.objects.get(entrenador = cliente.entrenador), many=True)
+            
+            return JsonResponse(rutina_serializer.data, safe=False)
+        except Exception:
+            #No es cliente quien hace la petición, obtenemos las rutinas del entrenador
+            entrenador = Entrenador.objects.get(user = request.user)
+            rutina_serializer = RutinaSerializer(Rutina.objects.filter(entrenador = entrenador), many=True)
     
     elif request.method == 'POST':
         #Identificamos al entrenador logueado 
