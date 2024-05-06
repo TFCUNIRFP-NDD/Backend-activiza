@@ -68,7 +68,9 @@ def rutina(request):
             #No es cliente quien hace la petición, obtenemos las rutinas del entrenador
             entrenador = Entrenador.objects.get(user = request.user)
             rutina_serializer = RutinaSerializer(Rutina.objects.filter(entrenador = entrenador), many=True)
-    
+
+            return JsonResponse(rutina_serializer.data, safe=False)
+
     elif request.method == 'POST':
         #Identificamos al entrenador logueado 
         try:
