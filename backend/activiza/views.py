@@ -61,7 +61,7 @@ def rutina(request):
         try:
             #Obtenemos las rutinas del entrenador asignado al cliente
             cliente = Cliente.objects.get(user = request.user)
-            rutina_serializer = RutinaSerializer(Rutina.objects.get(entrenador = cliente.entrenador), many=True)
+            rutina_serializer = RutinaSerializer(Rutina.objects.filter(entrenador = cliente.entrenador), many=True)
             
             return JsonResponse(rutina_serializer.data, safe=False)
         except Exception:
