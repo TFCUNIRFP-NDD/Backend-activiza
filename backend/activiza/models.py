@@ -54,6 +54,7 @@ class Cliente(models.Model):
 class Publicacion(models.Model):
     titulo = models.CharField(max_length=100)
     mensaje = models.CharField(max_length=1000)
+    media = models.CharField(max_length=1000, blank=True)
     autor = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
     
     def __str__(self):

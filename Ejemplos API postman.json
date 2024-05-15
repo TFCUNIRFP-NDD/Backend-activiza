@@ -1,0 +1,313 @@
+{
+	"info": {
+		"_postman_id": "805483ec-24bd-44e3-9e5f-bb8c85347b10",
+		"name": "Activiza",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "34175315"
+	},
+	"item": [
+		{
+			"name": "Ejercicios",
+			"item": [
+				{
+					"name": "Crear ejercicio",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"NombreEjercicio\",\r\n    \"descripcion\": \"DescripcionEjercicio\",\r\n    \"repeticiones\": 2,\r\n    \"duracion\": null,\r\n    \"descanso\": 1,\r\n    \"media\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://{{IP_LOCAL}}/activiza/api/ejercicio/"
+					},
+					"response": []
+				},
+				{
+					"name": "Todos los ejercicios",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"url": "http://{{IP_LOCAL}}/activiza/api/ejercicio/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Ejercicio $ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"url": "http://{{IP_LOCAL}}/activiza/api/ejercicio/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rutinas",
+			"item": [
+				{
+					"name": "Crear rutina",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"id\": 1,\r\n    \"nombre\": \"NombreRutinaPost\",\r\n    \"descripcion\": \"DescripcionPost\",\r\n    \"ejercicios\": [1,2], //IDs de los ejercicios\r\n    \"media\": \"https://i.imgur.com/Z7EHhdu.jpeg\", //Stock https://i.imgur.com/Z7EHhdu.jpeg\r\n    \"genero\": \"H\", // H (hombre) o M (mujer)\r\n    \"objetivo\": \"GRASA\", //GRASA (perder grasa) o MUSCULO (ganar musculo)\r\n    \"lugar_entrenamiento\": \"C\" //C (casa) o G (gimnasio)\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://{{IP_LOCAL}}/activiza/api/rutina/"
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar rutina",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"id\": 1,\r\n    \"nombre\": \"NombreRutinaPostModificar\",\r\n    \"descripcion\": \"DescripcionPost\",\r\n    \"ejercicios\": [1,2], //IDs de los ejercicios\r\n    \"media\": \"https://i.imgur.com/Z7EHhdu.jpeg\", //Stock https://i.imgur.com/Z7EHhdu.jpeg\r\n    \"genero\": \"H\", // H (hombre) o M (mujer)\r\n    \"objetivo\": \"GRASA\", //GRASA (perder grasa) o MUSCULO (ganar musculo)\r\n    \"lugar_entrenamiento\": \"C\" //C (casa) o G (gimnasio)\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://{{IP_LOCAL}}/activiza/api/rutina/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar rutina",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{TOKEN}}"
+							}
+						],
+						"url": "http://{{IP_LOCAL}}/activiza/api/rutina/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener rutinas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"url": "http://{{IP_LOCAL}}/activiza/api/rutina/"
+					},
+					"response": []
+				},
+				{
+					"name": "Rutinas $ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"url": "http://{{IP_LOCAL}}/activiza/api/rutina/2"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Publicaciones",
+			"item": [
+				{
+					"name": "Obtener publicaciones",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"url": "http://{{IP_LOCAL}}/activiza/api/publicaciones/"
+					},
+					"response": []
+				},
+				{
+					"name": "Crear publicacion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"titulo\": \"Test titulo publicacion\",\r\n    \"mensaje\": \"Test mensaje, puede ser muyyyy largo (1000 chars).\",\r\n    \"media\": \"URL\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://{{IP_LOCAL}}/activiza/api/publicaciones/"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Clientes",
+			"item": [
+				{
+					"name": "Generar token (login)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://{{IP_LOCAL}}/activiza/api-token-auth/"
+					},
+					"response": []
+				},
+				{
+					"name": "Crear usuario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"test_email@gmail.com\",\r\n    \"password\": \"test_user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://{{IP_LOCAL}}/activiza/api/user/"
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar datos cliente (una vez creado usuario)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"altura\": 182,\r\n    \"peso\": 79,\r\n    \"genero\": \"H\", // H (hombre) o M (mujer)\r\n    \"objetivo\": \"GRASA\", //GRASA (perder grasa) o MUSCULO (ganar musculo)\r\n    \"lugar_entrenamiento\": \"C\" //C (casa) o G (gimnasio)\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://{{IP_LOCAL}}/activiza/api/cliente/"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "IP_LOCAL",
+			"value": "127.0.0.1:8000"
+		},
+		{
+			"key": "IP_SERVER",
+			"value": "34.163.215.184",
+			"type": "string"
+		},
+		{
+			"key": "TOKEN",
+			"value": "33325134eb122a2a7e330fa06a8d1e39b947ec89"
+		}
+	]
+}
