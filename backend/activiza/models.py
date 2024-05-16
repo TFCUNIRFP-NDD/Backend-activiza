@@ -30,6 +30,7 @@ class Rutina(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=1000)
     ejercicios = models.ManyToManyField(Ejercicio)
+    duracion = models.IntegerField(blank=True, null=True)
     entrenador = models.ForeignKey(Entrenador, on_delete=models.CASCADE, blank=True, null=True)
     media = models.CharField(max_length=1000, blank=True)
     genero = models.CharField(max_length=1, choices=genero_choice)
