@@ -81,7 +81,7 @@ def rutina(request):
         body = json.loads(request.body)
         
         #Se crea la rutina y se devuelve
-        rutina = Rutina.objects.create(nombre = body["nombre"], descripcion = body["descripcion"], media = body["media"], genero = body["genero"], objetivo = body["objetivo"], lugar_entrenamiento = body["lugar_entrenamiento"], entrenador = entrenador)
+        rutina = Rutina.objects.create(nombre = body["nombre"], descripcion = body["descripcion"], duracion = body["duracion"], media = body["media"], genero = body["genero"], objetivo = body["objetivo"], lugar_entrenamiento = body["lugar_entrenamiento"], entrenador = entrenador)
         rutina_serializer = RutinaSerializer(rutina)
         
         #Asociamos todos los ejercicios de la rutina
