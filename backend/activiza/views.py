@@ -7,6 +7,9 @@ from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
 from rest_framework import status
 from django.contrib.auth.decorators import login_required
+from rest_framework.decorators import action
+from .utils import generate_qr_code
+from rest_framework.authtoken.models import Token
 
 #App
 from activiza.models import Ejercicio, Rutina, Publicacion, Cliente, Entrenador
@@ -46,13 +49,6 @@ def carga_inicial(request):
             rutina.ejercicios.add(ejercicio)
 
     return HttpResponse("Carga de datos inicial completada.")
-   
-def test(request):
-    cliente = Cliente.objects.get(user=User.objects.get(username="cliente"))
-    print(cliente.peso)
-    print(cliente.altura)
-    print(cliente.objetivo)
-    return HttpResponse("Test hecho.")
 
 @api_view(['GET', 'POST'])
 def rutina(request):
@@ -115,3 +111,17 @@ def rutina_detalle(request, pk):
     elif request.method == 'DELETE': 
         rutina.delete() 
         return JsonResponse({'message': f'Rutina {pk} eliminada.'}, status=status.HTTP_200_OK)
+    
+@api_view(['GET'])
+def get_qr_code(request):
+    try: 
+        token = Token.objects.get(user = request.user)
+        data_to_encode = f"Token {token.key}"  # Customize as needed
+        qr_code = generate_qr_code(data_to_encode)
+
+        response = HttpResponse(content_type="image/png")
+        qr_code.save(response, "PNG")
+        return response
+    except Exception: 
+        return JsonResponse({'message': 'No tienes permisos para ver el QR.'}, status=status.HTTP_403_FORBIDDEN) 
+    

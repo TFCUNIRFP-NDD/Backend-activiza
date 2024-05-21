@@ -46,7 +46,7 @@ class ClienteViewSet(viewsets.ModelViewSet):
         serializer = ClienteSerializer(data=request.data)
                 
         if serializer.is_valid():            
-            #Se crea la rutina y se devuelve
+            #Se crea el cliente y se devuelve
             cliente = Cliente.objects.create(user = request.user, altura = request.data["altura"], peso = request.data["peso"], genero = request.data["genero"], objetivo = request.data["objetivo"], lugar_entrenamiento = request.data["lugar_entrenamiento"], entrenador = Entrenador.objects.get(pk=1))
             cliente_serializer = ClienteSerializer(cliente)
             
