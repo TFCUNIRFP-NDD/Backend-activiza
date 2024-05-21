@@ -8,12 +8,14 @@ services:
             - static_data:/vol/web
             - ./backend:/backend
         environment:
-            - SECRET_KEY=sample123
+            - SECRET_KEY=gajKHFGAHgafhas77a6s8o7agHJAGFIUASGghkf
         depends_on:
             - db
 
     db:
         image: postgres:16.3-alpine3.19
+        environment:
+            POSTGRES_PASSWORD: postgres_gjkhagsdGAJGDiasyf78asfgiasy7fiagjHGAHFGA
 
     proxy: 
         build:
