@@ -4,10 +4,26 @@ services:
     backend:
         build:
             context: .
-        ports:
-            - "80:80"
         volumes:
+            - static_data:/vol/web
             - ./backend:/backend
         environment:
-            - DEBUG=1
-            - ALLOWED_HOSTS=127.0.0.1,localhost,34.125.175.117,10.182.0.2
+            - SECRET_KEY=sample123
+        depends_on:
+            - db
+
+    db:
+        image: postgres:16.3-alpine3.19
+
+    proxy: 
+        build:
+            context: ./proxy
+        volumes:
+          - static_data:/vol/static
+        ports:
+          - "8080:8080"
+        depends_on:
+            - backend
+
+volumes:
+    static_data:
