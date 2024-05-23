@@ -51,28 +51,40 @@ def carga_inicial(request):
     return HttpResponse("Carga de datos inicial completada.")
 
 @api_view(['GET', 'POST'])
-def rutina(request):
+def get_rutinas(request):
     
-    if request.method == 'GET':
+    if request.method == 'GET':     
         try:
-            #Obtenemos las rutinas del entrenador asignado al cliente
-            cliente = Cliente.objects.get(user = request.user)
-            rutina_serializer = RutinaSerializer(Rutina.objects.filter(entrenador = cliente.entrenador), many=True)
+            if request.GET: 
+                query_dict = request.GET.dict()     
+                              
+                #Obtenemos las rutinas del entrenador asignado al cliente, tambien filtrando por los campos
+                cliente = Cliente.objects.get(user = request.user)
+                query_dict["entrenador"] = cliente.entrenador
+                rutina_serializer = RutinaSerializer(Rutina.objects.filter(**query_dict), many=True)
+
+            else:
+                #Obtenemos las rutinas del entrenador asignado al cliente
+                cliente = Cliente.objects.get(user = request.user)
+                rutina_serializer = RutinaSerializer(Rutina.objects.filter(entrenador = cliente.entrenador), many=True)
             
             return JsonResponse(rutina_serializer.data, safe=False)
         except Exception:
-            #No es cliente quien hace la petición, obtenemos las rutinas del entrenador
-            entrenador = Entrenador.objects.get(user = request.user)
-            rutina_serializer = RutinaSerializer(Rutina.objects.filter(entrenador = entrenador), many=True)
+            try:
+                #No es cliente quien hace la petición, obtenemos las rutinas del entrenador
+                entrenador = Entrenador.objects.get(user = request.user)
+                rutina_serializer = RutinaSerializer(Rutina.objects.filter(entrenador = entrenador), many=True)
 
-            return JsonResponse(rutina_serializer.data, safe=False)
+                return JsonResponse(rutina_serializer.data, safe=False)
+            except Exception:
+                return JsonResponse({"error": "El usuario no tiene rutinas asignadas."}, status=status.HTTP_404_NOT_FOUND)
 
     elif request.method == 'POST':
         #Identificamos al entrenador logueado 
         try:
             entrenador = Entrenador.objects.get(user=request.user)
         except Exception:
-            return HttpResponse("No tienes permisos para crear rutinas.")
+            return JsonResponse({"error": "No tienes permisos para crear rutinas."}, status=status.HTTP_403_FORBIDDEN)
         
         body = json.loads(request.body)
         
@@ -88,7 +100,7 @@ def rutina(request):
         return JsonResponse(rutina_serializer.data, safe=False)
     
 @api_view(['GET', 'PUT', 'DELETE'])
-def rutina_detalle(request, pk):
+def get_rutina_detalle(request, pk):
     
     try: 
         rutina = Rutina.objects.get(pk=pk) 
@@ -115,13 +127,16 @@ def rutina_detalle(request, pk):
 @api_view(['GET'])
 def get_qr_code(request):
     try: 
+        #Generamos el QR con los datos
         token = Token.objects.get(user = request.user)
         data_to_encode = f"Token {token.key}"  # Customize as needed
         qr_code = generate_qr_code(data_to_encode)
 
+        #Devolvemos la imagen generada
         response = HttpResponse(content_type="image/png")
         qr_code.save(response, "PNG")
         return response
+    
     except Exception: 
         return JsonResponse({'message': 'No tienes permisos para ver el QR.'}, status=status.HTTP_403_FORBIDDEN) 
     

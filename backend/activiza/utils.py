@@ -1,6 +1,8 @@
 import qrcode
 from PIL import Image
 
+'''Generador de imagenes con la libreria pillow
+'''
 def generate_qr_code(data):
     qr = qrcode.QRCode(
         version=1,
@@ -13,4 +15,5 @@ def generate_qr_code(data):
     qr.make(fit=True)
 
     img = qr.make_image(fill_color="black", back_color="white")
+    
     return img
