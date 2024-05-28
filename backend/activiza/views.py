@@ -57,10 +57,8 @@ def get_rutinas(request):
         try:
             if request.GET: 
                 query_dict = request.GET.dict()     
-                              
-                #Obtenemos las rutinas del entrenador asignado al cliente, tambien filtrando por los campos
-                cliente = Cliente.objects.get(user = request.user)
-                query_dict["entrenador"] = cliente.entrenador
+
+                #Obtenemos las rutinas segun los filtros, busqueda global, sin entrenador
                 rutina_serializer = RutinaSerializer(Rutina.objects.filter(**query_dict), many=True)
 
             else:
