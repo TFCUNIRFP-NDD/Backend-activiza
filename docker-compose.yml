@@ -1,0 +1,36 @@
+version: "3.7"
+
+services:
+    db:
+        image: postgres:16.3-alpine3.19
+        ports:
+            - "5432:5432"
+        volumes:
+            - postgres_data:/var/lib/postgresql/data/
+        env_file:
+            - web.env
+
+    backend:
+        build:
+            context: .
+        volumes:
+            - static_data:/vol/web
+            - ./backend:/backend
+        env_file:
+            - web.env
+        depends_on:
+            - db
+
+    proxy: 
+        build:
+            context: ./proxy
+        volumes:
+          - static_data:/vol/static
+        ports:
+          - "80:80"
+        depends_on:
+            - backend
+
+volumes:
+    static_data:
+    postgres_data:
