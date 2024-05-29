@@ -24,7 +24,7 @@ class Entrenador(models.Model):
         return str(self.user.username)
     
     class Meta:
-        verbose_name = "Entrenadore"
+        verbose_name_plural = "Entrenadores"
     
 class Rutina(models.Model):
     nombre = models.CharField(max_length=100)
@@ -62,4 +62,4 @@ class Publicacion(models.Model):
         return str(self.titulo)  
     
     class Meta:
-        verbose_name = "Publicacione"
+        verbose_name_plural = "Publicaciones"
