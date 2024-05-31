@@ -1,4 +1,4 @@
-# Activiza backend
+# Activiza back-end
 
 API Rest creada en Python y Django
 
