@@ -1,7 +1,7 @@
 from django.urls import include, path
 from rest_framework import routers
 from rest_framework.authtoken import views as auth
-from activiza.customAuthToken import CustomAuthToken
+from activiza.api.customAuthToken import CustomAuthToken
 from . import views
 from activiza.api import viewSets
 

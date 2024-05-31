@@ -110,6 +110,12 @@ def get_rutina_detalle(request, pk):
         return JsonResponse(rutina_serializer.data) 
 
     elif request.method == 'PUT': 
+        #Identificamos al entrenador logueado 
+        try:
+            Entrenador.objects.get(user=request.user)
+        except Exception:
+            return JsonResponse({"error": "No tienes permisos para editar rutinas."}, status=status.HTTP_403_FORBIDDEN)
+        
         rutina_data = JSONParser().parse(request) 
         rutina_serializer = RutinaSerializer(rutina, data=rutina_data) 
         
@@ -119,6 +125,12 @@ def get_rutina_detalle(request, pk):
         return JsonResponse(rutina_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
 
     elif request.method == 'DELETE': 
+        #Identificamos al entrenador logueado 
+        try:
+            Entrenador.objects.get(user=request.user)
+        except Exception:
+            return JsonResponse({"error": "No tienes permisos para eliminar rutinas."}, status=status.HTTP_403_FORBIDDEN)
+        
         rutina.delete() 
         return JsonResponse({'message': f'Rutina {pk} eliminada.'}, status=status.HTTP_200_OK)
     
